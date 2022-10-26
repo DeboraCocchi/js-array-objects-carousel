@@ -99,11 +99,12 @@ const prev=document.querySelector('.fa-chevron-left');
 const next=document.querySelector('.fa-chevron-right');
 
 console.log(paintings.length);
-
+let leftToRight=true;
 next.addEventListener('click', nextEl);
 prev.addEventListener('click', prevEl);
 
 function nextEl(){
+  leftToRight=true;
   items[counter].classList.remove('active');
   miniItems[counter].classList.remove('active');
   info[counter].classList.add('hide');
@@ -135,4 +136,25 @@ function prevEl(){
   more[counter].classList.remove('hide');
 }
 
+//autoplay e bottoni per lo scorrimento
+
 const autoPlay= setInterval(nextEl, 5000);
+
+
+const reverseBtn = document.getElementById('reverse');
+const stopBtn = document.getElementById('stop');
+
+
+
+reverseBtn.addEventListener('click', function(){
+  
+  if(leftToRight){
+    clearInterval(autoPlay);
+    const reverseAutoPlay = setInterval(prevEl, 5000);
+    leftToRight=false;
+  }else{
+    clearInterval(reverseAutoPlay);
+    autoPlay();
+    leftToRight=true;
+  }
+})

@@ -12,14 +12,22 @@ body{
 main{
   display:flex;
   align-items: center;
+  height:100vh;
   justify-content: flex-start;
   background:linear-gradient(45deg, rgb(16, 16, 40), rgb(136, 164, 201));
+  flex-direction: column;
+}
+
+button{
+  border-radius: 8px;
+  padding:8px;
+  margin:30px 20px 0;
 }
 
 .main-container{
   width:60%;
   height:80vh;
-  margin:100px 250px;
+  margin:30px 150px 100px;
   display: flex;
   flex-direction: column;
   min-width:500px;
@@ -141,11 +149,12 @@ main{
 .paint-more{
   background-color: rgba(255,255,255,0.8);
   position:absolute;
+  overflow-y: auto;
   right:-180px;
   top:0;
   width:180px;
   height:100%;
-  padding:8px;
+  padding:10px;
   border-top-right-radius:15px;
   border-bottom-right-radius:15px;
   font-size:70%;
