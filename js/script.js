@@ -135,3 +135,4 @@ function prevEl(){
   more[counter].classList.remove('hide');
 }
 
+const autoPlay= setInterval(nextEl, 5000);
