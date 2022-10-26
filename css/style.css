@@ -20,14 +20,36 @@ main{
 
 button{
   border-radius: 8px;
-  padding:8px;
-  margin:30px 20px 0;
+  padding:8px 5px;
+  width:175px;
+  position:absolute;
+  right:-180px;
+  font-size: 80%;
+  background-color: steelblue;
+  color:white;
+  transition: all 0.5s ease-in;
+  border: none;
+
+}
+
+button:first-of-type{
+  top:50px;
+}
+
+button:last-of-type{
+  top:0;
+}
+
+button:hover{
+  color:steelblue;
+  background-color: whitesmoke;
 }
 
 .main-container{
   width:60%;
-  height:80vh;
-  margin:30px 150px 100px;
+  position: fixed;
+  height:600px;
+  margin:30px 0 100px;
   display: flex;
   flex-direction: column;
   min-width:500px;
@@ -151,9 +173,8 @@ button{
   position:absolute;
   overflow-y: auto;
   right:-180px;
-  top:0;
+  bottom:0;
   width:180px;
-  height:100%;
   padding:10px;
   border-top-right-radius:15px;
   border-bottom-right-radius:15px;

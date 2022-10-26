@@ -1,6 +1,11 @@
 /* Riprendiamo l’esercizio carosello e rifacciamolo, questa volta usando un array di oggetti.
 Ogni elemento deve avere un titolo, una descrizione e il riferimento ad una immagine. */
 
+/* NOTA A STEFANO , LORIS, ALFREDO:
+Ciao! Come potrete evincere c'è qualche problema di loop-bootoni...Ci vediamo presto in ticket! :) */
+
+
+const mainContainer = document.querySelector('.main-container');
 const paintingsContainer = document.querySelector('.big-paintings-container');
 const thumbnailsContainer = document.querySelector('.thumbnails-container');
 const items = document.getElementsByClassName('item');
@@ -11,7 +16,7 @@ const paintings =[
     author: "Pieter Bruegel il Vecchio",
     year: 1562,
     title: "Trionfo della morte",
-    more: "I toni caldi del quadro evocano un'atmosfera infernale, che ben rappresenta la drammaticità del momento. La Morte, infatti, è giunta e sta uccidendo gli uomini, che reagiscono nei più svariati modi: sorpresa, sgomento, rassegnazione, inutile ribellione o indifferenza - come la coppia in basso a destra, che ignora quanto sta avvenendo distraendosi con la musica (rappresentazione della lussuria) di un liuto.",
+    more: "I toni caldi del quadro evocano un'atmosfera infernale, che ben rappresenta la drammaticità del momento. La Morte, infatti, è giunta e sta uccidendo gli uomini, che reagiscono nei più svariati modi: sorpresa, sgomento, rassegnazione, inutile ribellione o indifferenza - come la coppia in basso a destra, che ignora quanto sta avvenendo distraendosi con la musica (rappresentazione della lussuria) di un liuto.",
     image:"img/bruegel.jpeg"
   },
     
@@ -59,7 +64,6 @@ for(let painting of paintings){
   const thumbDiv = document.createElement('div');
   thumbDiv.className = 'thumbnail';
   thumbDiv.innerHTML =  `<img class="mini-item thumb-cover" src="${painting.image}" alt="${painting.title}">`;
-  const thumbCover = document.createElement('div');
 
   
   thumbnailsContainer.append(thumbDiv);
@@ -86,25 +90,101 @@ for(let painting of paintings){
 
 const info = (document.getElementsByClassName('paint-info'));
 const more = (document.getElementsByClassName('paint-more'));
-
+const prev=document.querySelector('.fa-chevron-left');
+const next=document.querySelector('.fa-chevron-right');
 let counter = 0;
+
 // status di default del primo quadro (e del quadro visibile)
 items[0].classList.add('active');
 miniItems[0].classList.add('active');
 info[0].classList.remove('hide');
 more[0].classList.remove('hide');
 
-
-const prev=document.querySelector('.fa-chevron-left');
-const next=document.querySelector('.fa-chevron-right');
-
-console.log(paintings.length);
-let leftToRight=true;
 next.addEventListener('click', nextEl);
 prev.addEventListener('click', prevEl);
 
+let leftToRight=true;
+let isAutoPlay =false;
+
+//autoplay e bottoni per lo scorrimento
+
+const reverseBtn = document.getElementById('reverse');
+const stopBtn = document.getElementById('stop');
+
+let autoPlay;
+const startPlay = setTimeout(function(){
+  isAutoPlay=true;
+  console.log('startplay!');
+  autoPlay=setInterval(nextEl, 5000);
+  console.log('autoPlay started working------');
+ 
+
+  mainContainer.addEventListener('mouseover', function(){
+    console.log('mouseover');
+    isAutoPlay=false;
+    clearInterval(autoPlay);
+  });
+
+  mainContainer.addEventListener('mouseleave', function(){
+    console.log('mouseleave');
+    isAutoPlay=true;
+    autoPlay;
+    leftToRight=true;
+  });
+
+}, 5000);
+
+
+
+reverseBtn.addEventListener('click', function(){
+  console.log(isAutoPlay);
+  if(isAutoPlay=true){
+    
+    if (!leftToRight){
+      console.log('left to right è '+ leftToRight);
+      leftToRight=true;
+      console.log('left to right diventa '+leftToRight);
+      console.log('Standard autoPlay is working!')
+      autoPlay=setInterval(nextEl, 5000);
+       }
+    else{
+      console.log('left to right è '+leftToRight);
+      clearInterval(autoPlay);
+      leftToRight=false;
+      console.log('left to right diventa '+leftToRight);
+      console.log('Reverse autoPlay is working!');
+      autoPlay=setInterval(prevEl, 5000);
+    
+        }
+  }else{
+    reverseBtn.innerHTML='Carosello'
+    console.log('----------> riparto!');
+    startPlay;
+    isAutoPlay=true;
+  }}
+)
+
+stopBtn.addEventListener('click', function(){
+
+  if(isAutoPlay=true){
+    console.log('stoppato!');
+    clearInterval(autoPlay);
+    console.log('AutoPlay is not working!');
+    stopBtn.innerHTML ='Riprendi scorrimento automatico';
+
+  }else{
+    autoPlay=setInterval(next, 5000);
+    leftToRight=true;
+    isAutoPlay=true;
+  }
+})
+
+
+
 function nextEl(){
+  isAutoPlay=true;
   leftToRight=true;
+  console.log('nexTEl auto is working!');
   items[counter].classList.remove('active');
   miniItems[counter].classList.remove('active');
   info[counter].classList.add('hide');
@@ -121,6 +201,9 @@ function nextEl(){
 }
 
 function prevEl(){
+  isAutoPlay=true;
+  leftToRight=false;
+  console.log('prevEl auto is working!');
   items[counter].classList.remove('active');
   miniItems[counter].classList.remove('active');
   info[counter].classList.add('hide');
@@ -135,26 +218,3 @@ function prevEl(){
   info[counter].classList.remove('hide');
   more[counter].classList.remove('hide');
 }
-
-//autoplay e bottoni per lo scorrimento
-
-const autoPlay= setInterval(nextEl, 5000);
-
-
-const reverseBtn = document.getElementById('reverse');
-const stopBtn = document.getElementById('stop');
-
-
-
-reverseBtn.addEventListener('click', function(){
-  
-  if(leftToRight){
-    clearInterval(autoPlay);
-    const reverseAutoPlay = setInterval(prevEl, 5000);
-    leftToRight=false;
-  }else{
-    clearInterval(reverseAutoPlay);
-    autoPlay();
-    leftToRight=true;
-  }
-})
