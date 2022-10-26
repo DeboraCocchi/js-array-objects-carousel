@@ -1,6 +1,10 @@
 /* Riprendiamo l’esercizio carosello e rifacciamolo, questa volta usando un array di oggetti.
 Ogni elemento deve avere un titolo, una descrizione e il riferimento ad una immagine. */
 
+const paintingsContainer = document.querySelector('.big-paintings-container');
+const thumbnailsContainer = document.querySelector('.thumbnails-container');
+const items = document.getElementsByClassName('item');
+const miniItems = document.getElementsByClassName('mini-item');
 
 const paintings =[
   {
@@ -45,8 +49,7 @@ const paintings =[
   
   ];
 
-const paintingsContainer = document.querySelector('.big-paintings-container');
-const thumbnailsContainer = document.querySelector('.thumbnails-container');
+
 
 
 
@@ -62,14 +65,13 @@ for(let painting of paintings){
   thumbnailsContainer.append(thumbDiv);
   
   paintingsContainer.innerHTML += bigPaintTags;
-  console.log(bigPaintTags);
 
   const mainPaintInfo = document.createElement('div');
   mainPaintInfo.className = 'paint-info';
   mainPaintInfo.classList.add('hide');
   mainPaintInfo.innerHTML = `
-  <h5 class="paint-author">${painting.author}</h5>
-  <h4 class="paint-title">${painting.title}</h4><span class="paint-year">${painting.year}</span>
+  <h5 class="paint-author">${painting.author}, <span class="paint-year">${painting.year}</span></h5>
+  <h3 class="paint-title">${painting.title}</h3>
   `;
 
   const paintMore = document.createElement('div');
@@ -79,21 +81,57 @@ for(let painting of paintings){
 
   paintingsContainer.append(mainPaintInfo);
   paintingsContainer.append(paintMore);
-  console.log(mainPaintInfo);
-
 }
 
-let counterPaintings = 0;
-const items = document.getElementsByClassName('item');
-const miniItems = document.getElementsByClassName('mini-item');
-const thumbCover = document.getElementsByClassName('thumb-cover');
 
+const info = (document.getElementsByClassName('paint-info'));
+const more = (document.getElementsByClassName('paint-more'));
+
+let counter = 0;
+// status di default del primo quadro (e del quadro visibile)
 items[0].classList.add('active');
 miniItems[0].classList.add('active');
-
-console.log(document.getElementsByClassName('thumb-cover'));
+info[0].classList.remove('hide');
+more[0].classList.remove('hide');
 
 
 const prev=document.querySelector('.fa-chevron-left');
 const next=document.querySelector('.fa-chevron-right');
+
+console.log(paintings.length);
+
+next.addEventListener('click', nextEl);
+prev.addEventListener('click', prevEl);
+
+function nextEl(){
+  items[counter].classList.remove('active');
+  miniItems[counter].classList.remove('active');
+  info[counter].classList.add('hide');
+  more[counter].classList.add('hide');
+
+  if(counter===paintings.length-1){
+    counter = 0;
+  }else{++counter};
+
+  items[counter].classList.add('active');
+  miniItems[counter].classList.add('active');
+  info[counter].classList.remove('hide');
+  more[counter].classList.remove('hide');
+}
+
+function prevEl(){
+  items[counter].classList.remove('active');
+  miniItems[counter].classList.remove('active');
+  info[counter].classList.add('hide');
+  more[counter].classList.add('hide');
+
+  if(counter===0){
+    counter = paintings.length-1;
+  }else{--counter};
+
+  items[counter].classList.add('active');
+  miniItems[counter].classList.add('active');
+  info[counter].classList.remove('hide');
+  more[counter].classList.remove('hide');
+}
 
