@@ -51,15 +51,49 @@ const thumbnailsContainer = document.querySelector('.thumbnails-container');
 
 
 for(let painting of paintings){
-  let bigPaintTags = `<img class="item" src="${painting.image}" alt="${painting.title}">`;
+  let bigPaintTags = `<img class="item hide" src="${painting.image}" alt="${painting.title}">`;
 
   const thumbDiv = document.createElement('div');
   thumbDiv.className = 'thumbnail';
-  thumbDiv.innerHTML =  `<img class="item" src="${painting.image}" alt="${painting.title}">`
-  thumbnailsContainer.append(thumbDiv)
+  thumbDiv.innerHTML =  `<img class="mini-item thumb-cover" src="${painting.image}" alt="${painting.title}">`;
+  const thumbCover = document.createElement('div');
+
   
-  paintingsContainer.innerHTML = bigPaintTags;
+  thumbnailsContainer.append(thumbDiv);
+  
+  paintingsContainer.innerHTML += bigPaintTags;
   console.log(bigPaintTags);
+
+  const mainPaintInfo = document.createElement('div');
+  mainPaintInfo.className = 'paint-info';
+  mainPaintInfo.classList.add('hide');
+  mainPaintInfo.innerHTML = `
+  <h5 class="paint-author">${painting.author}</h5>
+  <h4 class="paint-title">${painting.title}</h4><span class="paint-year">${painting.year}</span>
+  `;
+
+  const paintMore = document.createElement('div');
+  paintMore.className = 'paint-more';
+  paintMore.classList.add('hide');
+  paintMore.innerHTML = `${painting.more}`;
+
+  paintingsContainer.append(mainPaintInfo);
+  paintingsContainer.append(paintMore);
+  console.log(mainPaintInfo);
+
 }
 
+let counterPaintings = 0;
+const items = document.getElementsByClassName('item');
+const miniItems = document.getElementsByClassName('mini-item');
+const thumbCover = document.getElementsByClassName('thumb-cover');
+
+items[0].classList.add('active');
+miniItems[0].classList.add('active');
+
+console.log(document.getElementsByClassName('thumb-cover'));
+
+
+const prev=document.querySelector('.fa-chevron-left');
+const next=document.querySelector('.fa-chevron-right');
 

@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+body{
+  font-family: 'Poppins', sans-serif;
+}
+
 
 main{
   display:flex;
@@ -24,12 +28,14 @@ main{
   height:calc(100% - 80px);
   width:100%;
   background-color: blueviolet;
+  position: relative;
 }
 
-.item{
+.item , .mini-item{
   width:100%;
   height:100%;
   object-fit: cover;
+  object-position: center;
 }
 
 .item.active{
@@ -45,15 +51,31 @@ main{
 .thumbnail{
   height:100%;
   width:20%;
+  position:relative;
 }
 
 .thumbnail img{
   width:100%;
   object-fit: cover;
+
 }
 
-.thumbnail.active{
+.thumb-cover{
+  content:'';
+  width:100%;
+  height:100%;
+  position: absolute;
+  top:0;
+  left:0;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.thumbnail .active{
   border:2px solid white;
+}
+
+.thumbnail .active .thumb-cover{
+  display:none;
 }
 
 .circle{
@@ -82,5 +104,38 @@ main{
 
 .arrows{
  position: relative;
+}
 
+.hide{
+  display:none;
+}
+
+.paint-info{
+  background-color: rgba(255,255,255,0.6);
+  border-radius:10px;
+  position:absolute;
+  right:5px;
+  top:5px;
+  width: 180px;
+  height:70px;
+  padding:15px;
+  text-align: right;
+  font-size:80%;
+}
+
+.paint-year{
+  font-size:80%;
+}
+
+
+.paint-more{
+  background-color: rgba(63, 182, 63, 0.6);
+  position:absolute;
+  right:-200px;
+  width:200px;
+  height:100%;
+  padding:8px;
+  border-top-right-radius:15px;
+  border-bottom-right-radius:15px;
+  font-size:70%;
 }
