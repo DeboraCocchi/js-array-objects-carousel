@@ -23,7 +23,7 @@ button{
   padding:8px 5px;
   width:175px;
   position:absolute;
-  right:-180px;
+  right:90px;
   font-size: 80%;
   background-color: steelblue;
   color:white;
@@ -33,11 +33,11 @@ button{
 }
 
 button:first-of-type{
-  top:50px;
+  top:80px;
 }
 
 button:last-of-type{
-  top:0;
+  top:30px;
 }
 
 button:hover{

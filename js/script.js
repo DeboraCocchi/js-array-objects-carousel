@@ -113,23 +113,22 @@ const stopBtn = document.getElementById('stop');
 
 let autoPlay;
 const startPlay = setTimeout(function(){
-  isAutoPlay=true;
   console.log('startplay!');
   autoPlay=setInterval(nextEl, 5000);
   console.log('autoPlay started working------');
+  isAutoPlay=true;
  
 
   mainContainer.addEventListener('mouseover', function(){
-    console.log('mouseover');
+    console.log('mouseover: stop');
     isAutoPlay=false;
     clearInterval(autoPlay);
+    stopBtn.innerHTML='Riprendi scorrimento automatico'
   });
 
   mainContainer.addEventListener('mouseleave', function(){
-    console.log('mouseleave');
-    isAutoPlay=true;
-    autoPlay;
-    leftToRight=true;
+    isAutoPlay=false;
+    clearInterval(autoPlay);  leftToRight=true;
   });
 
 }, 5000);
@@ -138,7 +137,7 @@ const startPlay = setTimeout(function(){
 
 reverseBtn.addEventListener('click', function(){
   console.log(isAutoPlay);
-  if(isAutoPlay=true){
+  if(isAutoPlay===true){
     
     if (!leftToRight){
       console.log('left to right è '+ leftToRight);
@@ -157,52 +156,58 @@ reverseBtn.addEventListener('click', function(){
     
         }
   }else{
-    reverseBtn.innerHTML='Carosello'
     console.log('----------> riparto!');
-    startPlay;
+    autoPlay=setInterval(nextEl, 5000);
     isAutoPlay=true;
+    leftToRight=true;
   }}
 )
 
 stopBtn.addEventListener('click', function(){
 
-  if(isAutoPlay=true){
+  if(isAutoPlay===true){
+    console.log('isAutoPlay è' + isAutoPlay);
     console.log('stoppato!');
     clearInterval(autoPlay);
     console.log('AutoPlay is not working!');
     stopBtn.innerHTML ='Riprendi scorrimento automatico';
+    isAutoPlay=false;
+    console.log('adesso isAutoPlay è' + isAutoPlay);
 
   }else{
-    autoPlay=setInterval(next, 5000);
+    console.log('isAutoPlay è' + isAutoPlay);
+    autoPlay=setInterval(nextEl, 5000);
     leftToRight=true;
     isAutoPlay=true;
+    console.log('adesso isAutoPlay è' + isAutoPlay);
+    stopBtn.innerHTML ='Interrompi scorrimento automatico';
   }
 })
 
 
 
 function nextEl(){
-  isAutoPlay=true;
-  leftToRight=true;
-  console.log('nexTEl auto is working!');
-  items[counter].classList.remove('active');
-  miniItems[counter].classList.remove('active');
-  info[counter].classList.add('hide');
-  more[counter].classList.add('hide');
+  if(leftToRight===true){
+    console.log('nexTEl auto is working!');
+    items[counter].classList.remove('active');
+    miniItems[counter].classList.remove('active');
+    info[counter].classList.add('hide');
+    more[counter].classList.add('hide');
 
-  if(counter===paintings.length-1){
-    counter = 0;
-  }else{++counter};
+    if(counter===paintings.length-1){
+      counter = 0;
+    }else{++counter};
 
-  items[counter].classList.add('active');
-  miniItems[counter].classList.add('active');
-  info[counter].classList.remove('hide');
-  more[counter].classList.remove('hide');
+    items[counter].classList.add('active');
+    miniItems[counter].classList.add('active');
+    info[counter].classList.remove('hide');
+    more[counter].classList.remove('hide');
+  }
 }
 
 function prevEl(){
-  isAutoPlay=true;
-  leftToRight=false;
+  if(leftToRight===false){
+
   console.log('prevEl auto is working!');
   items[counter].classList.remove('active');
   miniItems[counter].classList.remove('active');
@@ -217,4 +222,5 @@ function prevEl(){
   miniItems[counter].classList.add('active');
   info[counter].classList.remove('hide');
   more[counter].classList.remove('hide');
+}
 }
